@@ -14,12 +14,16 @@ T_Electeur creationelecteur(void) {
 
 void afficheliste(T_Electeur liste_electeur) {
     T_Electeur t_elec = liste_electeur;
-
-    while(t_elec != NULL) {
-        printf("Nom : %s\n", t_elec->nom);
-        printf("Cin : %ld\n", t_elec->cin_num);
-        printf("Votant : %d\n\n", t_elec->choix);
-        t_elec = t_elec->suivant;
+    if (t_elec != NULL) {
+        while (t_elec != NULL) {
+            printf("Nom : %s\n", t_elec->nom);
+            printf("Cin : %ld\n", t_elec->cin_num);
+            printf("Votant : %d\n\n", t_elec->choix);
+            t_elec = t_elec->suivant;
+        }
+    }
+    else {
+        printf("\nCette liste est  vide.\n");
     }
 }
 
@@ -38,7 +42,6 @@ void ajoutelecteur(T_Electeur *liste, char nom[], long cin, int vote) {
         if (actuel==NULL){
             *liste = t_elec;
         }
-
         else {
             T_Electeur precedent = NULL;
 
@@ -114,7 +117,7 @@ void decoupeliste(T_Electeur liste, T_Electeur *liste_gauche, T_Electeur *liste_
     T_Electeur t_elec = liste;
 
     while (t_elec != NULL) {
-        if(t_elec->choix == 1 || t_elec->choix == 3){
+        if (t_elec->choix == 1 || t_elec->choix == 3){
             ajoutelecteur(liste_gauche, t_elec->nom, t_elec->cin_num, t_elec->choix);
         }
         else if(t_elec->choix == 2 || t_elec->choix == 4){
