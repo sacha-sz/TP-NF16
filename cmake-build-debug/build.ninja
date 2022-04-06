@@ -72,6 +72,12 @@ build CMakeFiles/TP3_NF16.dir/election_presidentielle.c.obj: C_COMPILER__TP3_NF1
   OBJECT_DIR = CMakeFiles\TP3_NF16.dir
   OBJECT_FILE_DIR = CMakeFiles\TP3_NF16.dir
 
+build CMakeFiles/TP3_NF16.dir/interface_presidentielle.c.obj: C_COMPILER__TP3_NF16_Debug C$:/Users/sacha/CLionProjects/TP3-NF16/interface_presidentielle.c || cmake_object_order_depends_target_TP3_NF16
+  DEP_FILE = CMakeFiles\TP3_NF16.dir\interface_presidentielle.c.obj.d
+  FLAGS = -g -std=gnu99
+  OBJECT_DIR = CMakeFiles\TP3_NF16.dir
+  OBJECT_FILE_DIR = CMakeFiles\TP3_NF16.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target TP3_NF16
@@ -80,7 +86,7 @@ build CMakeFiles/TP3_NF16.dir/election_presidentielle.c.obj: C_COMPILER__TP3_NF1
 #############################################
 # Link the executable TP3_NF16.exe
 
-build TP3_NF16.exe: C_EXECUTABLE_LINKER__TP3_NF16_Debug CMakeFiles/TP3_NF16.dir/main.c.obj CMakeFiles/TP3_NF16.dir/election_presidentielle.c.obj
+build TP3_NF16.exe: C_EXECUTABLE_LINKER__TP3_NF16_Debug CMakeFiles/TP3_NF16.dir/main.c.obj CMakeFiles/TP3_NF16.dir/election_presidentielle.c.obj CMakeFiles/TP3_NF16.dir/interface_presidentielle.c.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\TP3_NF16.dir
