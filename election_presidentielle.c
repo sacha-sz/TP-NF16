@@ -12,14 +12,14 @@ T_Electeur creationelecteur(void) {
     return electeur1;
 }
 
+
 void afficheliste(T_Electeur liste_electeur) {
-    T_Electeur t_elec = liste_electeur;
-    if (t_elec != NULL) {
-        while (t_elec != NULL) {
-            printf("Nom : %s\n", t_elec->nom);
-            printf("Cin : %ld\n", t_elec->cin_num);
-            printf("Votant : %d\n\n", t_elec->choix);
-            t_elec = t_elec->suivant;
+    if (liste_electeur != NULL) {
+        while (liste_electeur != NULL) {
+            printf("Nom : %s\n", liste_electeur->nom);
+            printf("Cin : %ld\n", liste_electeur->cin_num);
+            printf("Votant : %d\n\n", liste_electeur->choix);
+            liste_electeur = liste_electeur->suivant;
         }
     }
     else {
@@ -57,7 +57,7 @@ void ajoutelecteur(T_Electeur *liste, char nom[], long cin, int vote) {
                 precedent->suivant = t_elec;
             }
             else {
-                t_elec->suivant=actuel;
+                t_elec->suivant = actuel;
                 precedent->suivant = t_elec;
             }
         }
@@ -97,19 +97,25 @@ void supprime_electeur(T_Electeur *liste, long cin) {
     T_Electeur t_elec = *liste;
     T_Electeur precedent = NULL;
 
-
-    while (t_elec->suivant != NULL && t_elec->cin_num != cin) {
-        precedent = t_elec;
-        t_elec = t_elec->suivant;
-    }
-    if (precedent==NULL &&  t_elec->cin_num == cin) {
-        *liste = t_elec -> suivant;
-    }
-    else if (t_elec->cin_num == cin) {
-        precedent->suivant = t_elec->suivant;
+    if (t_elec != NULL) {
+        while (t_elec->suivant != NULL && t_elec->cin_num != cin) {
+            precedent = t_elec;
+            t_elec = t_elec->suivant;
+        }
+        if (precedent == NULL && t_elec->cin_num == cin) {
+            *liste = t_elec->suivant;
+            free(t_elec);
+        }
+        else if (t_elec->cin_num == cin) {
+            precedent->suivant = t_elec->suivant;
+            free(t_elec);
+        }
+        else {
+            printf("\nCette personne n'existe pas\n");
+        }
     }
     else {
-        printf("\nCette personne n'existe pas\n");
+        printf("La liste est vide\n");
     }
 }
 
@@ -209,12 +215,11 @@ int compteGD(T_Electeur liste){
 }
 
 void libereliste (T_Electeur liste) {
-    T_Electeur t_elec = liste;
-    T_Electeur tmp;
+    while (liste != NULL) {
+        T_Electeur tmp;
 
-    while (t_elec != NULL) {
-        tmp = t_elec;
-        t_elec = t_elec->suivant;
+        tmp = liste;
+        liste = liste->suivant;
         free(tmp);
     }
 }
