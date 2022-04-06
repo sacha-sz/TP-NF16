@@ -64,7 +64,7 @@ void ajoutelecteur(T_Electeur *liste, char nom[], long cin, int vote) {
     }
 }
 
-int comptelecteur (T_Electeur *liste) {
+int compte_electeur (T_Electeur *liste) {
     int nb_electeur = 0;
     T_Electeur t_elec = *liste;
     while (t_elec != NULL) {
@@ -74,7 +74,7 @@ int comptelecteur (T_Electeur *liste) {
     return nb_electeur;
 }
 
-int trouvelecteur(T_Electeur *liste, long cin) {
+int trouve_electeur(T_Electeur *liste, long cin) {
     T_Electeur t_elec = *liste;
 
     while (t_elec != NULL && t_elec->cin_num != cin) {
@@ -92,7 +92,7 @@ int trouvelecteur(T_Electeur *liste, long cin) {
     }
 }
 
-void Supprimelecteur(T_Electeur *liste, long cin) {
+void Supprime_electeur(T_Electeur *liste, long cin) {
     T_Electeur t_elec = *liste;
     T_Electeur precedent = NULL;
 
