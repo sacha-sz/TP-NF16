@@ -18,9 +18,10 @@ T_Electeur fusionlistes(T_Electeur *liste_gauche, T_Electeur liste_droite);
 void afficheliste(T_Electeur liste_electeur);
 void ajoutelecteur(T_Electeur *liste, char nom[], long cin, int vote);
 void triliste(T_Electeur *liste);
-void Supprime_electeur(T_Electeur *liste, long cin);
+void supprime_electeur(T_Electeur *liste, long cin);
 void decoupeliste(T_Electeur liste, T_Electeur *liste_gauche, T_Electeur *liste_droite, T_Electeur *liste_blanc);
 void libereliste (T_Electeur liste);
+void supprime_dernier_elec (T_Electeur *liste);
 
 int compteGD(T_Electeur liste);
 int compte_electeur (T_Electeur *liste);

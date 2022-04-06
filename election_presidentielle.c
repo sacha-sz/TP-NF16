@@ -82,6 +82,7 @@ int trouve_electeur(T_Electeur *liste, long cin) {
     }
 
     if (t_elec == NULL) {
+        printf("Aucun electeur n'a ce numero de cin.\n");
         return 0;
     }
     else {
@@ -92,24 +93,23 @@ int trouve_electeur(T_Electeur *liste, long cin) {
     }
 }
 
-void Supprime_electeur(T_Electeur *liste, long cin) {
+void supprime_electeur(T_Electeur *liste, long cin) {
     T_Electeur t_elec = *liste;
     T_Electeur precedent = NULL;
 
 
-    while (t_elec != NULL && t_elec->cin_num != cin) {
+    while (t_elec->suivant != NULL && t_elec->cin_num != cin) {
         precedent = t_elec;
         t_elec = t_elec->suivant;
     }
-
-    if (precedent==NULL) {
+    if (precedent==NULL &&  t_elec->cin_num == cin) {
         *liste = t_elec -> suivant;
     }
-    else if (t_elec==NULL) {
-        printf("\nCette personne n'existe pas\n");
+    else if (t_elec->cin_num == cin) {
+        precedent->suivant = t_elec->suivant;
     }
     else {
-        precedent->suivant= t_elec->suivant;
+        printf("\nCette personne n'existe pas\n");
     }
 }
 
@@ -195,7 +195,6 @@ T_Electeur fusionlistes(T_Electeur *liste_gauche, T_Electeur liste_droite) {
     }
 }
 
-
 int compteGD(T_Electeur liste){
     int nb_voix_gauche = 0;
     T_Electeur t_elec = liste;
@@ -217,5 +216,27 @@ void libereliste (T_Electeur liste) {
         tmp = t_elec;
         t_elec = t_elec->suivant;
         free(tmp);
+    }
+}
+
+void supprime_dernier_elec (T_Electeur *liste) {
+    T_Electeur t_elec = *liste;
+    T_Electeur precedent = NULL;
+
+    if (t_elec != NULL) {
+        while (t_elec->suivant != NULL) {
+            precedent = t_elec;
+            t_elec = t_elec->suivant;
+        }
+
+        if (precedent == NULL) {
+            *liste = NULL;
+        }
+        else {
+            precedent->suivant = NULL;
+        }
+    }
+    else {
+        printf("\nLa liste est vide\n\n");
     }
 }
