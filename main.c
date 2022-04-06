@@ -29,27 +29,30 @@ int main() {
 
     printf("Le nombre d'electeur est de : %d\n", compte_electeur(liste));
     printf("Le nombre d'electeur de gauche est de : %d\n", compteGD(*liste));
-    libereliste(*liste);
-    afficheliste(*liste);
+    printf("avant :%d\n", liste);
+//    libereliste(*liste);
+//    printf("%d", liste);
+//    afficheliste(*liste);
 
-//    printf("Debut decoupe :");
-//
-//    decoupeliste(*liste, &liste_gauche, &liste_droite, &liste_blanc);
-//    printf("333");
-//
-//
-//    printf("Liste gauche :\n");
-//    afficheliste(liste_gauche);
-//
-//
-//    printf("Liste droite :\n");
-//    afficheliste(liste_droite);
-//
-//
-//    printf("Liste blanc :\n");
-//    afficheliste(liste_blanc);
-//
-//
+
+    printf("Debut decoupe :");
+
+    decoupeliste(*liste, &liste_gauche, &liste_droite, &liste_blanc);
+    printf("333");
+
+
+    printf("Liste gauche :\n");
+    afficheliste(liste_gauche);
+
+
+    printf("Liste droite :\n");
+    afficheliste(liste_droite);
+
+
+    printf("Liste blanc :\n");
+    afficheliste(liste_blanc);
+
+
 //    printf("Fusion liste \n");
 //    fusionlistes(liste_gauche, liste_droite);
 //    afficheliste(liste_gauche);

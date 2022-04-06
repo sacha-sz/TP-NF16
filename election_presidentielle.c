@@ -33,7 +33,7 @@ void ajoutelecteur(T_Electeur *liste, char nom[], long cin, int vote) {
         // Initialisation des champs
         t_elec->choix = vote;
         t_elec->cin_num = cin;
-        t_elec->nom = malloc(sizeof (nom));
+        t_elec->nom = malloc(strlen(nom) * sizeof (char));
         strcpy(t_elec->nom, nom);
 
 
