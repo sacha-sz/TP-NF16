@@ -8,9 +8,18 @@ int main() {
     T_Electeur liste_elec;
     liste_elec = NULL;
     T_Electeur *liste = &liste_elec;
-    T_Electeur liste_gauche;
-    T_Electeur liste_droite;
-    T_Electeur liste_blanc;
+
+    T_Electeur liste_elec_gauche;
+    liste_elec_gauche = NULL;
+    T_Electeur *liste_gauche = &liste_elec_gauche;
+
+    T_Electeur liste_elec_droite;
+    liste_elec_droite = NULL;
+    T_Electeur *liste_droite = &liste_elec_droite;
+
+    T_Electeur liste_elec_blanc;
+    liste_elec_blanc = NULL;
+    T_Electeur *liste_blanc = &liste_elec_blanc;
 
     ajoutelecteur(liste, "charles", 1, 2);
     ajoutelecteur(liste, "pierre", 3, 1);
@@ -29,38 +38,57 @@ int main() {
 
     printf("Le nombre d'electeur est de : %d\n", compte_electeur(liste));
     printf("Le nombre d'electeur de gauche est de : %d\n", compteGD(*liste));
-    printf("avant :%d\n", liste);
-//    libereliste(*liste);
-//    printf("%d", liste);
-//    afficheliste(*liste);
 
+    trouve_electeur(liste, 2);
 
     printf("Debut decoupe :");
 
-    decoupeliste(*liste, &liste_gauche, &liste_droite, &liste_blanc);
-    printf("333");
+    decoupeliste(*liste, liste_gauche, liste_droite, liste_blanc);
 
 
     printf("Liste gauche :\n");
-    afficheliste(liste_gauche);
+    afficheliste(*liste_gauche);
 
 
     printf("Liste droite :\n");
-    afficheliste(liste_droite);
+    afficheliste(*liste_droite);
 
 
     printf("Liste blanc :\n");
-    afficheliste(liste_blanc);
+    afficheliste(*liste_blanc);
 
 
-//    printf("Fusion liste \n");
-//    fusionlistes(liste_gauche, liste_droite);
-//    afficheliste(liste_gauche);
+    printf("Fusion liste \n");
+    fusionlistes(liste_gauche, *liste_droite);
+    afficheliste(*liste_gauche);
 
 
     return 0;
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //    int rep = -1;
 //    printf("Bienvenu dans la gestion d'une election.\nVoici le menu:\n");

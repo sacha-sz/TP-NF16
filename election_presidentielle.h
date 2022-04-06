@@ -13,7 +13,7 @@ typedef struct electeur {
 typedef electeur * T_Electeur;
 
 T_Electeur creationelecteur(void);
-T_Electeur fusionlistes(T_Electeur liste_gauche, T_Electeur liste_droite);
+T_Electeur fusionlistes(T_Electeur *liste_gauche, T_Electeur liste_droite);
 
 void afficheliste(T_Electeur liste_electeur);
 void ajoutelecteur(T_Electeur *liste, char nom[], long cin, int vote);

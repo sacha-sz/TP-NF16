@@ -120,13 +120,15 @@ void decoupeliste(T_Electeur liste, T_Electeur *liste_gauche, T_Electeur *liste_
         if (t_elec->choix == 1 || t_elec->choix == 3){
             ajoutelecteur(liste_gauche, t_elec->nom, t_elec->cin_num, t_elec->choix);
         }
-        else if(t_elec->choix == 2 || t_elec->choix == 4){
+        else if (t_elec->choix == 2 || t_elec->choix == 4){
             ajoutelecteur(liste_droite, t_elec->nom, t_elec->cin_num, t_elec->choix);
         }
-        else {
+        else if (t_elec->choix == 5) {
             ajoutelecteur(liste_blanc, t_elec->nom, t_elec->cin_num, t_elec->choix);
+
         }
         t_elec = t_elec->suivant;
+
     }
 }
 
@@ -173,9 +175,9 @@ void triliste(T_Electeur *liste) {
     }
 }
 
-T_Electeur fusionlistes(T_Electeur liste_gauche, T_Electeur liste_droite) {
+T_Electeur fusionlistes(T_Electeur *liste_gauche, T_Electeur liste_droite) {
     T_Electeur actuel_droite = liste_droite;
-    T_Electeur actuel_gauche = liste_gauche;
+    T_Electeur actuel_gauche = *liste_gauche;
 
     if (actuel_droite == NULL) {
         return actuel_gauche;
@@ -184,12 +186,12 @@ T_Electeur fusionlistes(T_Electeur liste_gauche, T_Electeur liste_droite) {
         return actuel_droite;
     }
     else {
-        while (actuel_droite->suivant != NULL) {
-            actuel_droite = actuel_droite->suivant;
+        while (actuel_gauche->suivant != NULL) {
+            actuel_gauche = actuel_gauche->suivant;
         }
-        actuel_droite->suivant = actuel_gauche;
-        triliste(&actuel_droite);
-        return actuel_droite;
+        actuel_gauche->suivant = actuel_droite;
+        triliste(&actuel_gauche);
+        return actuel_gauche;
     }
 }
 
