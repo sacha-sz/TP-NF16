@@ -250,6 +250,10 @@ int main() {
                 libereliste(*liste_gauche);
                 libereliste(*liste_droite);
                 libereliste(*liste_blanc);
+                *liste = NULL;
+                *liste_gauche = NULL;
+                *liste_droite = NULL;
+                *liste_blanc = NULL;
                 break;
 
 

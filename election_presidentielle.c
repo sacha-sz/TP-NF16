@@ -167,7 +167,6 @@ int compte_electeur (T_Electeur *liste) {
     while (t_elec != NULL) {
         // On incrémente le compteur tant qu'on n'est pas arrivé à la fin de la liste
         nb_electeur++;
-
         // On passe à l'électeur suivant
         t_elec = t_elec->suivant;
     }
