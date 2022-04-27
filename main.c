@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <unistd.h>
 #include "election_presidentielle.h"
 #include "interface_presidentielle.h"
 
@@ -27,12 +28,35 @@ int main() {
     liste_elec_blanc = NULL;
     T_Electeur *liste_blanc = &liste_elec_blanc;
 
+    // Initialisation de la liste des electeurs fusion
+    T_Electeur liste_fusion;
+    liste_fusion = NULL;
+    T_Electeur *fusion = &liste_fusion;
+
     // Initialisation des variables de réponse
     int rep = -1;
     int rep_menu_8 = -1;
 
     // Initialisation de la variable de vérification de la possibilité de calculer les pourcentages
     int calcul_pourcentage_possible = 0;
+
+    // *********** Valeurs de test ***********
+    ajoutelecteur(liste, "Emma", 34432, 1);
+    ajoutelecteur(liste, "Jade", 65921, 2);
+    ajoutelecteur(liste, "Louise", 70186, 3);
+    ajoutelecteur(liste, "Alice", 45762, 4);
+    ajoutelecteur(liste, "Chloe", 12456, 1);
+    ajoutelecteur(liste, "Lina", 10247,5);
+    ajoutelecteur(liste, "Lea", 54763, 7);
+    ajoutelecteur(liste, "Rose", 40239, 4);
+    ajoutelecteur(liste, "Anna", 42597, 1);
+    ajoutelecteur(liste, "Marwa", 39350, 4);
+    ajoutelecteur(liste, "Sarah", 25390, 5);
+    ajoutelecteur(liste, "Sarah", 90357, 7);
+    ajoutelecteur(liste, "Sarah", 84256, 9);
+    ajoutelecteur(liste, "Tom", 60606, 4);
+    ajoutelecteur(liste, "Pierre", 51247, 5);
+    // *****************************************
 
 
     // Initialisation du menu principal à l'aide d'une boucle do while afin de rentrer au moins une fois dans le menu
@@ -59,8 +83,8 @@ int main() {
                 // On ne fait rien (pas de break) afin de passer dans le cas 2
             case 2:
                 // Affichage d'un message dynamique en fonction de la réponse de l'utilisateur
-                if (rep==1) printf("Vous avez choisi d'entrer les electeurs.\n");
-                else printf("Vous avez choisi d'ajouter les electeurs.\n");
+                if (rep==1) printf("\t------ Entrer les electeurs ------\n");
+                else printf("\t------ Ajouter les electeurs ------\n");
 
                 // Création d'un nouvel électeur
 
@@ -69,7 +93,6 @@ int main() {
                 printf("Veuillez saisir le nom de l'electeur :\n");
                 scanf("%s", &nom);
                 while (getchar() != '\n');
-                printf("Le nom saisi est : %s\n", nom);
 
                 // On initialise le cin de l'électeur en appelant la fonction saisie_electeur_cin
                 long cin = saisie_electeur_cin();
@@ -81,49 +104,58 @@ int main() {
 
                 // On ajoute l'électeur à la liste principale
                 ajoutelecteur(liste, nom, cin, vote);
+                printf("Informations ajoutees :\n");
+                printf("\tNom : %s\n", nom);
+                printf("\tCIN : %ld\n", cin);
+                printf("\tChoix : %d\n", vote);
+                sleep(2);
                 break;
 
             case 3 :
                 // Affichage d'un message informatif pour l'utilisateur
-                printf("Vous avez choisi de supprimer un electeur.\n");
+                printf("\t------ Supprimer un electeur ------\n");
 
                 // On initialise le cin de l'électeur en appelant la fonction saisie_electeur_cin
                 long cin_electeur_supprimer = saisie_electeur_cin();
 
                 // On supprime l'électeur de la liste principale
                 supprime_electeur(liste, cin_electeur_supprimer);
+                sleep(2);
                 break;
 
             case 4 :
                 // Affichage d'un message informatif pour l'utilisateur
-                printf("Vous avez choisi de supprimer le dernier electeur.\n");
+                printf("\t------ Supprimer le dernier electeur ------\n");
 
                 // On supprime le dernier électeur de la liste principale
                 supprime_dernier_elec(liste);
+                sleep(2);
                 break;
 
             case 5 :
                 // Affichage d'un message informatif pour l'utilisateur
-                printf("Vous avez choisi de rechercher un electeur.\n");
+                printf("\t------ Rechercher un electeur ------\n");
 
                 // On initialise le cin de l'électeur en appelant la fonction saisie_electeur_cin
                 long cin_electeur_rechercher = saisie_electeur_cin();
 
                 // On recherche l'électeur dans la liste principale
                 trouve_electeur(liste, cin_electeur_rechercher);
+                sleep(3);
                 break;
 
             case 6 :
                 // Affichage d'un message informatif pour l'utilisateur
-                printf("Vous avez d'afficher la liste des electeurs.\n");
+                printf("\t------ Affichage de la liste des electeurs ------\n");
 
                 // On affiche la liste des électeurs
                 afficheliste(*liste);
+                sleep(5);
                 break;
 
             case 7 :
                 // Affichage d'un message informatif pour l'utilisateur
-                printf("Vous avez choisi de calculer le nombre des electeurs.\n");
+                printf("\t------ Calculer le nombre des electeurs ------\n");
 
                 // On initialise le nombre d'électeurs
                 int nb_electeurs = 0;
@@ -131,11 +163,12 @@ int main() {
 
                 // On affiche le nombre d'électeurs
                 printf("Le nombre d'electeur est de : %d\n", nb_electeurs);
+                sleep(2);
                 break;
 
             case 8:
                 // Affichage d'un message informatif pour l'utilisateur
-                printf("Vous avez choisi de decouper la liste en trois sous-listes selon les choix: droite, gauche et blanc.\n");
+                printf("\t------ Decoupage de la liste ------\n");
 
                 // On initialise les trois sous-listes en découpant la liste principale
                 decoupeliste(*liste, liste_gauche, liste_droite, liste_blanc);
@@ -152,17 +185,18 @@ int main() {
                     switch (rep_menu_8) {
                         case 1:
                             // Affichage d'un message informatif pour l'utilisateur
-                            printf("Vous avez choisi de trier les sous listes.\n");
+                            printf("\t------ Tri des sous listes ------\n");
 
                             // On trie les sous-listes
                             triliste(liste_gauche);
                             triliste(liste_droite);
                             triliste(liste_blanc);
+                            sleep(2);
                             break;
 
                         case 2:
                             // Affichage d'un message informatif pour l'utilisateur
-                            printf("Vous avez choisi d'afficher les sous listes.\n");
+                            printf("\t------ Affichage des sous listes ------\n");
 
                             // On affiche les sous-listes
                             printf("\nListe gauche :\n");
@@ -174,16 +208,21 @@ int main() {
                             printf("\nListe blanc :\n");
                             afficheliste(*liste_blanc);
 
+                            sleep(5);
                             break;
                         case 3:
                             // Affichage d'un message informatif pour l'utilisateur
-                            printf("Vous avez choisi de fusionner les sous listes.\n");
+                            printf("\t------ Fusion des sous listes ------\n");
 
                             // On fusionne les sous-listes vers la liste gauche
-                            fusionlistes(liste_gauche, *liste_droite);
+                            *fusion = fusionlistes(liste_gauche, *liste_droite);
+//                            *liste_gauche = NULL;
+//                            *liste_droite = NULL;
+//                            *liste_blanc = NULL;
 
                             // On rend posssible le calcul du pourcentage
                             calcul_pourcentage_possible = 1;
+                            sleep(2);
                             break;
                         case 4:
                             // Affichage d'un message informatif pour l'utilisateur
@@ -199,7 +238,7 @@ int main() {
 
             case 9 :
                 // Affichage d'un message informatif pour l'utilisateur
-                printf("Vous avez choisi de calculer les pourcentages de gauche et de droite pour le 2eme tour.\n");
+                printf("\t------ Calcul des pourcentages ------\n");
 
                 // On vérifie que le calcul du pourcentage est possible
                 if (calcul_pourcentage_possible == 1) {
@@ -208,10 +247,10 @@ int main() {
                     int nb_electeurs_droite = 0;
 
                     // On calcule le nombre d'électeurs (ayant voté à gauche ou à droite)
-                    int nb_electeur = compte_electeur(liste_gauche);
+                    int nb_electeur = compte_electeur(fusion);
 
                     // On calcule le nombre d'électeurs ayant voté à gauche
-                    nb_electeurs_gauche = compteGD(*liste_gauche);
+                    nb_electeurs_gauche = compteGD(*fusion);
 
                     // On en déduit le nombre d'électeurs ayant voté à droite
                     nb_electeurs_droite = nb_electeur - nb_electeurs_gauche;
@@ -223,6 +262,7 @@ int main() {
                     // On calcule puis on affiche le pourcentage de droite
                     float pourcentage_droite = ((float) nb_electeurs_droite / (float) nb_electeur) * 100;
                     printf("Le pourcentage d'electeurs de droite est de : %.3f %\n", pourcentage_droite);
+                    sleep(3);
                 }
                 else {
                     // Si le calcul du pourcentage n'est pas possible, on affiche un message d'erreur
@@ -230,20 +270,24 @@ int main() {
 
                     //  On guide l'utilisateur pour qu'il puisse faire une fusion des sous-listes pour pouvoir calculer les pourcentages
                     printf("Veuillez selectionner 8 puis 3 puis revenir effectuer les calculs.\n");
+                    sleep(3);
                 }
                 break;
 
             case 10 :
                 // Affichage d'un message informatif pour l'utilisateur
-                printf("Vous avez choisi de trier la liste principale.\n");
+                printf("\t------ Tri de la liste principale ------\n");
 
                 // On trie la liste principale
                 triliste(liste);
+                // On affiche la liste triée
+                afficheliste(*liste);
+                sleep(5);
                 break;
 
             case 11 :
                 // Affichage d'un message informatif pour l'utilisateur
-                printf("Vous avez choisi de liberer les listes.\n");
+                printf("\t------ Liberation des listes ------\n");
 
                 // On libère les listes
                 libereliste(*liste);

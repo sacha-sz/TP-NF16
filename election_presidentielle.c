@@ -88,8 +88,18 @@ void ajoutelecteur(T_Electeur *liste, char nom[], long cin, int vote) {
     T_Electeur t_elec = creationelecteur();
     if (t_elec != NULL) {
         // Initialisation des champs
-        t_elec->choix = vote;
         t_elec->cin_num = cin;
+
+        if (vote > 5 || vote <= 0) {
+            vote = 5;
+            t_elec->choix = vote;
+
+        }
+        else {
+            t_elec->choix = vote;
+
+        }
+
 
         // On copie le nom dans le champ nom de l'électeur dont l'espace mémoire est alloué
         t_elec->nom = malloc(strlen(nom) * sizeof (char));
@@ -132,8 +142,6 @@ void ajoutelecteur(T_Electeur *liste, char nom[], long cin, int vote) {
                 precedent->suivant = t_elec;
             }
         }
-        // On affiche un message de confirmation du bon déroulement de la fonction
-        printf("\nL'electeur %s a bien ete ajoute a la liste.\n", t_elec->nom);
     }
     else {
         // Si l'électeur n'a pas pu être créé, on affiche un message d'erreur (confirmant la fin de la fonction)
@@ -267,6 +275,7 @@ void supprime_electeur(T_Electeur *liste, long cin) {
 
             // On libère ensuite la mémoire
             free(t_elec);
+            printf("\nL'electeur avec le numero de cin %ld a ete supprime.\n", cin);
         }
         else if (t_elec->cin_num == cin) {
             // Si nous voulons supprimer un électeur et que nous ne sommes pas en début de liste
@@ -276,6 +285,7 @@ void supprime_electeur(T_Electeur *liste, long cin) {
 
             // On libère ensuite la mémoire
             free(t_elec);
+            printf("\nL'electeur avec le numero de cin %ld a ete supprime.\n", cin);
         }
         else {
             // Si on est arrivé à la fin de la liste et que l'électeur n'a pas été trouvé, on affiche un message
@@ -596,7 +606,8 @@ void supprime_dernier_elec (T_Electeur *liste) {
             precedent->suivant = NULL;
             free(t_elec);
         }
-        // On affiche un message de
+        // On affiche un message de confirmation
+        printf("\nL'electeur a ete supprime\n");
     }
     else {
         // On affiche un message d'erreur
