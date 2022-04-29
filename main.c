@@ -101,15 +101,16 @@ int main() {
 
                     // On initialise le cin de l'électeur en appelant la fonction saisie_electeur_cin
                     long cin = saisie_electeur_cin();
-                    if (cin > 5 || cin <= 0) {
-                        // Tout autre vote que 1 à 4 sera considéré comme un vote blanc donc vote = 5, vérification supplémentaire à l'affichage
-                        cin = 5;
-                    }
+
 
                     // On initialise le vote de l'électeur
                     int vote = 0;
                     printf("Veuillez saisir le choix de l'electeur (1 a 5) :\n");
                     scanf("%d", &vote);
+                    if (vote > 5 || vote <= 0) {
+                        // Tout autre vote que 1 à 4 sera considéré comme un vote blanc donc vote = 5, vérification supplémentaire à l'affichage
+                        vote = 5;
+                    }
 
                     // On ajoute l'électeur à la liste principale
                     ajoutelecteur(liste, nom, cin, vote);
