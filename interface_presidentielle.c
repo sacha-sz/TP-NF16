@@ -67,3 +67,13 @@ long saisie_electeur_cin(void) {
     // Retourner le cin saisi
     return cin;
 }
+
+void affiche_candidat(void){
+    // Fonction permettant d'afficher les candidats
+    printf("Format de la liste des candidats : (nom : choix a saisir    Bord)\n");
+    printf("Nom 1 : 1\tGauche\n");
+    printf("Nom 2 : 2\tDroite\n");
+    printf("Nom 3 : 3\tGauche\n");
+    printf("Nom 4 : 4\tDroite\n");
+    printf("Tout autre choix : 5\tBlanc\n\n");
+}

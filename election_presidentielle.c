@@ -50,13 +50,9 @@ void afficheliste(T_Electeur liste_electeur) {
 
         // On parcourt la liste
         while (liste_electeur != NULL) {
-            // On affiche le nom de l'électeur
+            // On affiche les informations de l'électeur
             printf("Nom : %s\n", liste_electeur->nom);
-
-            // On affiche le cin de l'électeur
             printf("Cin : %ld\n", liste_electeur->cin_num);
-
-            // On affiche le vote de l'électeur
             printf("Votant : %d\n\n", liste_electeur->choix);
 
             // On passe à l'électeur suivant
@@ -91,6 +87,7 @@ void ajoutelecteur(T_Electeur *liste, char nom[], long cin, int vote) {
         t_elec->cin_num = cin;
 
         if (vote > 5 || vote <= 0) {
+            // Tout autre vote que 1 à 4 sera considéré comme un vote blanc donc vote = 5
             vote = 5;
             t_elec->choix = vote;
 
@@ -212,10 +209,8 @@ int trouve_electeur(T_Electeur *liste, long cin) {
 
     // On retourne 1 si l'électeur a été trouvé, 0 sinon et on affiche un message approprié
     if (t_elec == NULL) {
-        // L'électeur n'a pas été trouvé
         printf("\nL'electeur avec le numero de cin %ld n'a pas ete trouve.\n", cin);
 
-        // On retourne 0
         return 0;
     }
     else {
@@ -257,10 +252,8 @@ void supprime_electeur(T_Electeur *liste, long cin) {
     if (t_elec != NULL) {
         // On parcourt la liste jusqu'à trouver l'électeur avec son cin et dans le cas échéant jusqu'à la fin
         while (t_elec->suivant != NULL && t_elec->cin_num != cin) {
-            // On affecte au champ précédent l'électeur actuel
+            // On affecte au champ précédent l'électeur  et on passe à l'électeur suivant
             precedent = t_elec;
-
-            // On passe à l'électeur suivant
             t_elec = t_elec->suivant;
         }
 
@@ -331,7 +324,7 @@ void decoupeliste(T_Electeur liste, T_Electeur *liste_gauche, T_Electeur *liste_
             // On appelle la fonction ajoutelecteur pour ajouter l'électeur à la liste droite
             ajoutelecteur(liste_droite, t_elec->nom, t_elec->cin_num, t_elec->choix);
         }
-        // On ajoute l'électeur à la liste blanc pour tous les autres cas
+        // On ajoute l'électeur à la liste blanc dans tous les autres cas (vote = 5)
         else {
             // On appelle la fonction ajoutelecteur pour ajouter l'électeur à la liste blanc
             ajoutelecteur(liste_blanc, t_elec->nom, t_elec->cin_num, t_elec->choix);

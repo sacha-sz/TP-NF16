@@ -9,5 +9,7 @@ void affiche_message_quitter(void);
 
 void affiche_message_erreur (void);
 
+void affiche_candidat(void);
+
 long saisie_electeur_cin(void);
 #endif //TP3_NF16_INTERFACE_PRESIDENTIELLE_H

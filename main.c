@@ -86,29 +86,38 @@ int main() {
                 if (rep==1) printf("\t------ Entrer les electeurs ------\n");
                 else printf("\t------ Ajouter les electeurs ------\n");
 
-                // Création d'un nouvel électeur
+                // Création d'un nouvel élécteur
+                rep = 1;
 
-                // On initialise le nom de l'électeur
-                char nom[Taille_MAX_NOM];
-                printf("Veuillez saisir le nom de l'electeur :\n");
-                scanf("%s", &nom);
-                while (getchar() != '\n');
+                do {
+                    // Affichage de la liste des candidats
+                    affiche_candidat();
 
-                // On initialise le cin de l'électeur en appelant la fonction saisie_electeur_cin
-                long cin = saisie_electeur_cin();
+                    // On initialise le nom de l'électeur
+                    char nom[Taille_MAX_NOM];
+                    printf("Veuillez saisir le nom de l'electeur :\n");
+                    scanf("%s", &nom);
+                    while (getchar() != '\n');
 
-                // On initialise le vote de l'électeur
-                int vote = 0;
-                printf("Veuillez saisir le choix de l'electeur :\n");
-                scanf("%d", &vote);
+                    // On initialise le cin de l'électeur en appelant la fonction saisie_electeur_cin
+                    long cin = saisie_electeur_cin();
 
-                // On ajoute l'électeur à la liste principale
-                ajoutelecteur(liste, nom, cin, vote);
-                printf("Informations ajoutees :\n");
-                printf("\tNom : %s\n", nom);
-                printf("\tCIN : %ld\n", cin);
-                printf("\tChoix : %d\n", vote);
-                sleep(2);
+                    // On initialise le vote de l'électeur
+                    int vote = 0;
+                    printf("Veuillez saisir le choix de l'electeur (1 a 5) :\n");
+                    scanf("%d", &vote);
+
+                    // On ajoute l'électeur à la liste principale
+                    ajoutelecteur(liste, nom, cin, vote);
+                    printf("Informations ajoutees :\n");
+                    printf("\tNom : %s\n", nom);
+                    printf("\tCIN : %ld\n", cin);
+                    printf("\tChoix : %d\n", vote);
+
+                    printf("Voulez-vous ajouter un autre electeur ? (1 pour oui, 0 pour non)\n");
+                    scanf("%d", &rep);
+                    sleep(2);
+                } while(rep != 0);
                 break;
 
             case 3 :
@@ -216,9 +225,8 @@ int main() {
 
                             // On fusionne les sous-listes vers la liste gauche
                             *fusion = fusionlistes(liste_gauche, *liste_droite);
-//                            *liste_gauche = NULL;
-//                            *liste_droite = NULL;
-//                            *liste_blanc = NULL;
+                            *liste_gauche = NULL;
+                            *liste_droite = NULL;
 
                             // On rend posssible le calcul du pourcentage
                             calcul_pourcentage_possible = 1;
