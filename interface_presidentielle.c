@@ -22,8 +22,8 @@ void affiche_menu(void) {
     printf("\tc  Fusionner les deux sous-listes : gauche et droite.\n");
     printf("9.  Calculer les pourcentages de gauche et de droite pour le 2eme tour.\n");
     printf("10. Trier la liste principale.\n");
-    printf("11.  Liberer les listes.\n");
-    printf("12.  Quitter.\n");
+    printf("11. Liberer les listes.\n");
+    printf("12. Quitter.\n");
 
     // Afficher une ligne de séparation
     printf("\t........................................................\n");
@@ -49,9 +49,9 @@ void affiche_message_quitter (void) {
     printf("Vous avez choisi de quitter.\n");
 }
 
-void affiche_message_erreur (void) {
+void affiche_message_erreur (int rep_min, int rep_max) {
     // Afficher le message d'erreur
-    printf("Vous avez choisi une option invalide\nVeuillez recommencer\n");
+    printf("Vous avez choisi une option invalide.\nVeuillez saisir un nombre entre %d et %d.\n\n", rep_min, rep_max);
 }
 
 long saisie_electeur_cin(void) {
@@ -70,7 +70,7 @@ long saisie_electeur_cin(void) {
 
 void affiche_candidat(void){
     // Fonction permettant d'afficher les candidats
-    printf("Format de la liste des candidats : (nom : choix a saisir    Bord)\n");
+    printf("Format de la liste des candidats : (nom : choix a saisir(entier)    Bord)\n");
     printf("Nom 1 : 1\tGauche\n");
     printf("Nom 2 : 2\tDroite\n");
     printf("Nom 3 : 3\tGauche\n");

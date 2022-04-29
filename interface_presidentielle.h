@@ -7,7 +7,7 @@ void affiche_menu_secondaire(void);
 
 void affiche_message_quitter(void);
 
-void affiche_message_erreur (void);
+void affiche_message_erreur (int rep_min, int rep_max);
 
 void affiche_candidat(void);
 

@@ -87,7 +87,7 @@ void ajoutelecteur(T_Electeur *liste, char nom[], long cin, int vote) {
         t_elec->cin_num = cin;
 
         if (vote > 5 || vote <= 0) {
-            // Tout autre vote que 1 à 4 sera considéré comme un vote blanc donc vote = 5
+            // Tout autre vote que 1 à 4 sera considéré comme un vote blanc donc vote = 5, vérification supplémentaire à la partie main
             vote = 5;
             t_elec->choix = vote;
 
@@ -436,7 +436,7 @@ void triliste(T_Electeur *liste) {
             }
         }
         // On affiche un message de confirmation
-        printf("\n\nLa liste a ete triee\n\n");
+        printf("\nLa liste a ete triee\n\n");
     }
 }
 

@@ -101,6 +101,10 @@ int main() {
 
                     // On initialise le cin de l'électeur en appelant la fonction saisie_electeur_cin
                     long cin = saisie_electeur_cin();
+                    if (cin > 5 || cin <= 0) {
+                        // Tout autre vote que 1 à 4 sera considéré comme un vote blanc donc vote = 5, vérification supplémentaire à l'affichage
+                        cin = 5;
+                    }
 
                     // On initialise le vote de l'électeur
                     int vote = 0;
@@ -113,10 +117,18 @@ int main() {
                     printf("\tNom : %s\n", nom);
                     printf("\tCIN : %ld\n", cin);
                     printf("\tChoix : %d\n", vote);
-
-                    printf("Voulez-vous ajouter un autre electeur ? (1 pour oui, 0 pour non)\n");
-                    scanf("%d", &rep);
                     sleep(2);
+
+                    do {
+                        if (rep > 1 || rep < 0) {
+                            printf("\nErreur de saisie, veuillez recommencer\n");
+                            printf("Voulez-vous ajouter un autre electeur ? (1 pour oui, 0 pour non)\n");
+                            scanf("%d", &rep);
+                        } else {
+                            printf("Voulez-vous ajouter un autre electeur ? (1 pour oui, 0 pour non)\n");
+                            scanf("%d", &rep);
+                        }
+                    } while (rep != 0 && rep != 1);
                 } while(rep != 0);
                 break;
 
@@ -223,13 +235,19 @@ int main() {
                             // Affichage d'un message informatif pour l'utilisateur
                             printf("\t------ Fusion des sous listes ------\n");
 
+                            printf("On fusionne les sous-listes en une liste que l'on trie:");
                             // On fusionne les sous-listes vers la liste gauche
                             *fusion = fusionlistes(liste_gauche, *liste_droite);
+
+                            // Une fois la fusion faite, on libère la mémoire des sous-listes
+                            printf("On libere la memoire des sous-listes:");
+                            libereliste(*liste_gauche);
                             *liste_gauche = NULL;
                             *liste_droite = NULL;
 
                             // On rend posssible le calcul du pourcentage
                             calcul_pourcentage_possible = 1;
+                            printf("\n");
                             sleep(2);
                             break;
                         case 4:
@@ -238,7 +256,7 @@ int main() {
                             break;
                         default:
                             // Affichage d'un message informatif pour l'utilisateur
-                            affiche_message_erreur ();
+                            affiche_message_erreur (NUM_REP_MIN, 4);
                             break;
                     }
                 } while (rep_menu_8 != 4); // Tant que l'utilisateur ne quitte pas le menu secondaire, on continue la boucle
@@ -297,15 +315,21 @@ int main() {
                 // Affichage d'un message informatif pour l'utilisateur
                 printf("\t------ Liberation des listes ------\n");
 
-                // On libère les listes
+                // On libère les listes et on affiche un message de confirmation
+                printf("Liberation de la liste principale:");
                 libereliste(*liste);
+                printf("\nLiberation de la liste gauche:");
                 libereliste(*liste_gauche);
+                printf("\nLiberation de la liste droite:");
                 libereliste(*liste_droite);
+                printf("\nLiberation de la liste fusion:");
                 libereliste(*liste_blanc);
+
                 *liste = NULL;
                 *liste_gauche = NULL;
                 *liste_droite = NULL;
                 *liste_blanc = NULL;
+                printf("\n\n");
                 break;
 
 
@@ -317,7 +341,7 @@ int main() {
 
             default:
                 // Affichage d'un message informatif pour l'utilisateur à l'aide de la fonction affiche_message_erreur
-                affiche_message_erreur();
+                affiche_message_erreur(NUM_REP_MIN, NUM_REP_MAX);
                 break;
         }
     } while (rep != NUM_REP_MAX); // Tant que l'utilisateur ne quitte pas le programme
