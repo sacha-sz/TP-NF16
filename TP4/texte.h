@@ -35,7 +35,7 @@ typedef t_listePositions t_ListePositions;
 
 typedef struct t_noeud
 {
-    int nb_occurrences;
+    int nb_occurences;
 
     char* mot;
 
@@ -166,7 +166,7 @@ t_Noeud* rechercher_mot (t_Index *index, char *mot_recherche);
 void afficher_index (t_Index *index);
 void afficher_max_apparition(t_Index *index);
 void construire_texte (t_Index *index, char *filename);
-void afficher_occurrences_mot (t_Index * index, char *mot);
+void afficher_occurences_mot (t_Index * index, char *mot);
 
 
 /*******************************************************************************

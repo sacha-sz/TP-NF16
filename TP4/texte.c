@@ -1,13 +1,10 @@
 #include "texte.h"
-
-#include <stdio.h>
-#include <stdlib.h>
-
+#include "stdio.h"
+#include "stdlib.h"
 #include "string.h"
 
+#define MAX_MOT 30
 #define MAX_LIGNE 1000
-
-
 
 /*********************         Fonctions de base (sans modifications)         ****************************/
 
@@ -231,15 +228,15 @@ void afficher_max_apparition(t_Index *index)
     // On initialise la pile contenant tous les noeuds de l'arbre
     Pile *pile = empiler_arbre(index);
 
-    // On suppose que le noeud avec le plus grand nombre d'occurrences est la racine
+    // On suppose que le noeud avec le plus grand nombre d'occurences est la racine
     t_Noeud *noeud_max = index->racine;
 
     // On parcourt la pile
     while (!pile_vide(pile))
     {
-        if (noeud_max->nb_occurrences < depiler(pile)->nb_occurrences)
+        if (noeud_max->nb_occurences < depiler(pile)->nb_occurences)
         {
-            // Si le nombre d'occurrences du noeud actuel est plus petit que celui de la pile, on met à jour le noeud max
+            // Si le nombre d'occurences du noeud actuel est plus petit que celui de la pile, on met à jour le noeud max
             noeud_max = depiler(pile);
         }
     }
@@ -280,9 +277,9 @@ void construire_texte (t_Index *index, char *filename)
 }
 
 
-void afficher_occurrences_mot (t_Index * index, char *mot)
+void afficher_occurences_mot (t_Index * index, char *mot)
 {
-    // On recherche le mot dans l'index, si il n'est pas présent on affiche un message d'erreur sinon on affiche les occurrences
+    // On recherche le mot dans l'index, si il n'est pas présent on affiche un message d'erreur sinon on affiche les occurences
     mise_en_min(mot);
 
     t_Noeud * noeud = rechercher_mot(index, mot);
@@ -293,12 +290,11 @@ void afficher_occurrences_mot (t_Index * index, char *mot)
     }
     else
     {
-        printf("Mot = \"%s\"\noccurrences = %d\n", mot, noeud->nb_occurrences);
+        printf("Mot = \"%s\"\nOccurences = %d\n", mot, noeud->nb_occurences);
         printf("Il apparait dans les phrases suivantes :\n");
         afficher_liste_positions_phrase(noeud->positions, index);
     }
 }
-
 
 
 /*********************         Fonctions de bases (avec modifications)         ****************************/
@@ -363,8 +359,6 @@ int indexer_fichier (t_Index *index, char *filename)
 
     while(fgets(ligne, MAX_LIGNE, input_file) != NULL)
     {
-        mise_en_min(ligne);
-
         if (premiere_ligne)
         {
             index->listeLigne = creer_liste_ligne(ligne);
@@ -378,6 +372,7 @@ int indexer_fichier (t_Index *index, char *filename)
                 return 0;
             }
         }
+        mise_en_min(ligne);
 
         if (ligne[strlen(ligne) - 1] == '\n')
         {
@@ -431,7 +426,7 @@ int indexer_fichier (t_Index *index, char *filename)
                 noeud->mot = malloc(sizeof(mot));
                 strcpy(noeud->mot, mot);
 
-                noeud->nb_occurrences = 1;
+                noeud->nb_occurences = 1;
                 noeud->filsGauche = NULL;
                 noeud->filsDroit = NULL;
 
@@ -450,8 +445,8 @@ int indexer_fichier (t_Index *index, char *filename)
             }
             else
             {
-                // Si le mot est dans l'index on ajoute la position dans la liste des positions et on incrémente le nombre d'occurrences
-                noeud->nb_occurrences++;
+                // Si le mot est dans l'index on ajoute la position dans la liste des positions et on incrémente le nombre d'occurences
+                noeud->nb_occurences++;
                 ajouter_position(noeud->positions, num_ligne, ordre, num_phrase);
                 index->nb_mots_total++;
             }
@@ -602,6 +597,8 @@ void liberer_phrase (t_listePhrases *liste)
 
     // On libère la dernière phrase de la liste puis on passe à la phrase précédente (via la fonction recursive)
     liberer_phrase (liste->suivante);
+
+    // On libère la phrase actuelle
 
     // Liberation de la liste des mots
     t_Liste_Mot *mot_actuel = liste->debut;
@@ -767,7 +764,7 @@ void afficher_noeud_recherche (t_Noeud *noeud)
     }
 
     // On affiche le mot du noeud, son nombre de positions et ses positions
-    printf("Le mot %s apparait %d fois, aux positions :\n", noeud->mot, noeud->nb_occurrences);
+    printf("Le mot %s apparait %d fois, aux positions :\n", noeud->mot, noeud->nb_occurences);
 
     printf("|\n");
 
@@ -958,8 +955,8 @@ void afficher_noeud_max (t_Noeud *noeud)
     {
         return;
     }
-    printf("Mot avec le plus d'occurrences: %s\n", noeud->mot);
-    printf("Nombre d'occurrences: %d\n", noeud->nb_occurrences);
+    printf("Mot avec le plus d'occurences: %s\n", noeud->mot);
+    printf("Nombre d'occurences: %d\n", noeud->nb_occurences);
     printf("Liste des positions: \n");
     afficher_liste_positions(noeud->positions);
 }
@@ -1139,16 +1136,13 @@ void affiche_liste_ligne(t_ListeLigne * listeLigne)
 {
     if (listeLigne == NULL)
     {
-        // Cas où la liste est vide, on ne fait rien
+        // Cas où la liste est vide, cas limite, on ne fait rien
         return;
     }
-    t_ListeLigne *actuel = listeLigne;
 
-    while(actuel != NULL)
-    {
-        printf("%s", actuel->ligne); // On affiche la ligne
-        actuel = actuel->ligneSuivante; // On rappelle la fonction pour afficher la liste suivante
-    }
+    printf("%s", listeLigne->ligne); // On affiche la ligne
+
+    affiche_liste_ligne(listeLigne->ligneSuivante); // On rappelle la fonction pour afficher la liste suivante
 }
 
 
@@ -1161,13 +1155,22 @@ int ajouter_ligne(t_Index * index, char * ligne)
     }
 
     // On crée la liste de ligne et on l'ajoute à la fin de la liste
-    t_ListeLigne * nouvelleLigne = creer_liste_ligne(ligne);
+    t_ListeLigne * nouvelleLigne = malloc(sizeof(t_ListeLigne));
 
     if (nouvelleLigne == NULL)
     {
         return 0;
     }
 
+    nouvelleLigne->ligneSuivante = NULL;
+
+    nouvelleLigne->ligne = malloc(sizeof(char) * strlen(ligne));
+
+    if (nouvelleLigne->ligne == NULL)
+    {
+        return 0;
+    }
+    strcpy(nouvelleLigne->ligne, ligne);
 
 
     if (index->listeLigne == NULL)

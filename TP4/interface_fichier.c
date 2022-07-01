@@ -1,15 +1,18 @@
 #include "interface_fichier.h"
-
-#include <stdio.h>
-#include <stdlib.h>
+#include "stdio.h"
+#include "stdlib.h"
 
 void affiche_menu (int debut) {
     // Afficher une ligne de séparation
-    printf("\n\t========================================================\n");
+
 
     // Afficher le menu
     if (debut == 1) {
-        printf("\t\tBienvenue dans la gestion d'un fichier texte.\n");
+        printf("\t========================================================\n");
+        printf("\t\tBienvenu dans la gestion d'une election.\n");
+    }
+    else {
+        printf("\n\t========================================================\n");
     }
     printf("Voici le menu:\n");
     printf("1.  Charger un fichier.\n");
@@ -29,8 +32,12 @@ void affiche_menu (int debut) {
     printf("Veuillez saisir votre choix :\n");
 }
 
+void affiche_message_quitter (void) {
+    // Afficher le message de quitter
+    printf("Vous avez choisi de quitter.\n");
+}
+
 void affiche_message_erreur (int rep_min, int rep_max) {
     // Afficher le message d'erreur
-    printf("Vous avez choisi une option invalide.\n");
-    printf("Veuillez saisir un nombre entre %d et %d.\n\n", rep_min, rep_max);
+    printf("Vous avez choisi une option invalide.\nVeuillez saisir un nombre entre %d et %d.\n\n", rep_min, rep_max);
 }

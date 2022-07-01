@@ -175,7 +175,7 @@ int main() {
                     scanf("%s", research_word2);
                     while (getchar() != '\n');
 
-                    afficher_occurrences_mot(index, research_word2);
+                    afficher_occurences_mot(index, research_word2);
                     sleep(5);
                 }
 
